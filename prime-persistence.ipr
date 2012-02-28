@@ -247,7 +247,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/jcatapult-persistence.iml" filepath="$PROJECT_DIR$/jcatapult-persistence.iml" />
+      <module fileurl="file://$PROJECT_DIR$/prime-persistence.iml" filepath="$PROJECT_DIR$/prime-persistence.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
