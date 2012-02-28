@@ -1,6 +1,6 @@
 <project xmlns="http://www.inversoft.org/schemas/savant-1.5/project"
          name="prime-persistence"
-         group="prime-framework.org"
+         group="primeframework.org"
          version="1.0">
 
   <plugin group="plugins.savant.inversoft.org" name="ide" version="1.2"/>
@@ -39,7 +39,7 @@
       <artifact group="usertype.jadira.org" name="usertype.jodatime" version="2.0"/>
     </artifact-group>
     <artifact-group type="test-compile">
-      <artifact group="jcatapult.org" name="jcatapult-mock" version="2.0-{integration}"/>
+      <artifact group="primeframework.org" name="prime-mock" version="1.0-{integration}"/>
       <artifact group="easymock.org" name="easymock" version="2.2"/>
       <artifact group="testng.org" name="testng" version="5.11"/>
     </artifact-group>

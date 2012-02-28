@@ -1,0 +1,49 @@
+/*
+ * Copyright (c) 2001-2007, Inversoft Inc., All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+package org.primeframework.domain.commerce;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.primeframework.persistence.service.jpa.PersistenceService;
+import org.primeframework.persistence.test.BaseJPATest;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
+import org.testng.annotations.Test;
+
+import com.google.inject.Inject;
+import static org.testng.Assert.*;
+
+/**
+ * This class tests the hibernate types.
+ *
+ * @author Brian Pontarelli
+ */
+public class MoneyCurrencyTypeTest extends BaseJPATest {
+  @Inject public PersistenceService persistenceService;
+
+  @Test
+  public void save() {
+    MoneyHolder holder = new MoneyHolder();
+    holder.setMoney(Money.of(CurrencyUnit.getInstance("EUR"), 1.99));
+    persistenceService.persist(holder);
+
+    List<MoneyHolder> holders = persistenceService.findAllByType(MoneyHolder.class);
+    assertEquals(holders.size(), 1);
+    assertEquals(holders.get(0).getMoney().getAmount(), new BigDecimal("1.99"));
+    assertEquals(holders.get(0).getMoney().getCurrencyUnit(), CurrencyUnit.getInstance("EUR"));
+  }
+}
