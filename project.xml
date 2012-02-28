@@ -1,0 +1,47 @@
+<project xmlns="http://www.inversoft.org/schemas/savant-1.5/project"
+         name="prime-persistence"
+         group="prime-framework.org"
+         version="1.0">
+
+  <plugin group="plugins.savant.inversoft.org" name="ide" version="1.2"/>
+  <plugin group="plugins.savant.inversoft.org" name="clean" version="1.1.1"/>
+  <plugin group="plugins.savant.inversoft.org" name="java" version="1.2"/>
+  <plugin group="plugins.savant.inversoft.org" name="testng" version="1.1.2"/>
+  <plugin group="plugins.savant.inversoft.org" name="database" version="1.1.1"/>
+  <plugin group="plugins.savant.inversoft.org" name="release-svn" version="1.0.1"/>
+
+  <!-- Compile properties -->
+  <property name="jdk.version" value="1.6"/>
+
+  <!-- This libary has hibernate entities and requires database creation -->
+  <property name="project.requires.database" value="true"/>
+  <property name="project.database.types" value="mysql,postgresql"/>
+
+  <dependencies>
+    <artifact-group type="compile-only">
+      <artifact group="inject.javax" name="inject-api" version="1.0"/>
+      <artifact group="mysql.com" name="mysql-connector-java" version="5.1.6"/>
+      <artifact group="postgresql.org" name="postgresql-jdbc4" version="9.0.801"/>
+      <artifact group="servlet.javax" name="servlet-api" version="2.4"/>
+    </artifact-group>
+    <artifact-group type="compile">
+      <artifact group="aopalliance.sourceforge.net" name="aopalliance" version="1.0"/>
+      <artifact group="commons.apache.org" name="commons-lang3" version="3.0.1"/>
+      <artifact group="common.hibernate.org" name="hibernate-commons-annotations" version="4.0.0-RC2"/>
+      <artifact group="inject.google.com" name="guice" version="3.0"/>
+      <artifact group="hibernate.org" name="hibernate-core" version="4.0.0-RC3"/>
+      <artifact group="hibernate.org" name="hibernate-entitymanager" version="4.0.0-RC3"/>
+      <artifact group="joda.org" name="joda-time" version="2.0"/>
+      <artifact group="joda.org" name="joda-money" version="0.6"/>
+      <artifact group="persistence.javax" name="persistence-api" version="2.0.1"/>
+    </artifact-group>
+    <artifact-group type="run">
+      <artifact group="usertype.jadira.org" name="usertype.jodatime" version="2.0"/>
+    </artifact-group>
+    <artifact-group type="test-compile">
+      <artifact group="jcatapult.org" name="jcatapult-mock" version="2.0-{integration}"/>
+      <artifact group="easymock.org" name="easymock" version="2.2"/>
+      <artifact group="testng.org" name="testng" version="5.11"/>
+    </artifact-group>
+  </dependencies>
+</project>
