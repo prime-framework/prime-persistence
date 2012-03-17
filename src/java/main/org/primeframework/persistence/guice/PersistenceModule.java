@@ -21,7 +21,6 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 import org.primeframework.persistence.service.jdbc.ConnectionProvider;
-import org.primeframework.persistence.service.jdbc.DataSourceProvider;
 import org.primeframework.persistence.service.jpa.EntityManagerFactoryProvider;
 import org.primeframework.persistence.service.jpa.EntityManagerProvider;
 import org.primeframework.persistence.txn.TransactionMethodInterceptor;
@@ -38,21 +37,13 @@ import com.google.inject.name.Names;
  *
  * @author Brian Pontarelli
  */
-public class PersistenceModule extends AbstractModule {
+public abstract class PersistenceModule extends AbstractModule {
   private final boolean jpaEnabled;
   private final String jpaUnit;
-  private final String dataSourceName;
 
-  public PersistenceModule() {
-    this.jpaEnabled = false;
-    this.jpaUnit = null;
-    this.dataSourceName = null;
-  }
-
-  public PersistenceModule(boolean jpaEnabled, String jpaUnit, String dataSourceName) {
+  public PersistenceModule(boolean jpaEnabled, String jpaUnit) {
     this.jpaEnabled = jpaEnabled;
     this.jpaUnit = jpaUnit;
-    this.dataSourceName = dataSourceName;
   }
 
   /**
@@ -60,21 +51,29 @@ public class PersistenceModule extends AbstractModule {
    */
   @Override
   protected void configure() {
-    configureJDBC();
-    configureJPA();
     TransactionMethodInterceptor interceptor = new TransactionMethodInterceptor();
     requestInjection(interceptor);
     bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
+
+    configureJDBC();
+
+    if (jpaEnabled) {
+      configureJPA();
+    }
   }
 
   /**
    * Sets up injections for the {@link Connection} and {@link DataSource}.
    */
   protected void configureJDBC() {
-    bind(DataSource.class).toProvider(DataSourceProvider.class).in(Singleton.class);
     bind(Connection.class).toProvider(ConnectionProvider.class);
-    bindConstant().annotatedWith(Names.named("non-jta-data-source")).to(dataSourceName);
+    bindDataSource();
   }
+
+  /**
+   * Must be implemented to setup the DataSource.
+   */
+  protected abstract void bindDataSource();
 
   /**
    * Sets up injections for {@link EntityManager} and {@link EntityManagerFactory}.
@@ -82,7 +81,6 @@ public class PersistenceModule extends AbstractModule {
   protected void configureJPA() {
     bind(EntityManagerFactory.class).toProvider(EntityManagerFactoryProvider.class).in(Singleton.class);
     bind(EntityManager.class).toProvider(EntityManagerProvider.class);
-    bindConstant().annotatedWith(Names.named("jpa.enabled")).to(jpaEnabled);
     bindConstant().annotatedWith(Names.named("jpa.unit")).to(jpaUnit);
   }
 }

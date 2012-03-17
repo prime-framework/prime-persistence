@@ -42,8 +42,8 @@ public class PersistenceFilter implements Filter {
   public void init(FilterConfig config) throws ServletException {
     String injectorKey = config.getInitParameter("injector-key");
     if (injectorKey == null) {
-      throw new ServletException("You must configure the PersistenceFilter using a parameter named [injector-key] that " +
-        "defines the key where the Guice Injector is stored inside the ServletContent.");
+      // Default to the Prime framework standard of guiceInjector
+      injectorKey = "guiceInjector";
     }
 
     Object injector = config.getServletContext().getAttribute(injectorKey);

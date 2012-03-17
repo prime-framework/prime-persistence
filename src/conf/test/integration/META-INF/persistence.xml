@@ -6,8 +6,8 @@
     <non-jta-data-source>java:comp/env/jdbc/prime-persistence</non-jta-data-source>
     <class>org.primeframework.persistence.service.jpa.User</class>
     <class>org.primeframework.persistence.service.jpa.BaseSoftDeletableUser</class>
-    <class>org.primeframework.domain.commerce.MoneyHolder</class>
-    <class>org.primeframework.domain.commerce.MoneyAmountHolder</class>
+    <class>org.primeframework.persistence.hibernate.MoneyHolder</class>
+    <class>org.primeframework.persistence.hibernate.MoneyAmountHolder</class>
     <properties>
       <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>-->
       <property name="hibernate.hbm2ddl.auto" value="create"/>

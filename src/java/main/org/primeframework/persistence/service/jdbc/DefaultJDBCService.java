@@ -15,8 +15,6 @@
  */
 package org.primeframework.persistence.service.jdbc;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,36 +25,21 @@ import org.primeframework.persistence.txn.jdbc.JDBCTransactionalResource;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.inject.name.Named;
 
 /**
- * This is the default implementation of the JDBC service. it uses a single named constant to determine if JDBC is
- * enabled. This constant is named <strong>non-jta-data-source</strong>.
+ * This is the default implementation of the JDBC service.
  *
  * @author Brian Pontarelli
  */
 @Singleton
 public class DefaultJDBCService implements JDBCService {
   private final TransactionContextManager manager;
-  private DataSource ds;
+  private final DataSource dataSource;
 
   @Inject
-  public DefaultJDBCService(TransactionContextManager manager) {
+  public DefaultJDBCService(TransactionContextManager manager, DataSource dataSource) {
     this.manager = manager;
-  }
-
-  @Inject(optional = true)
-  public void setDatasourceName(@Named("non-jta-data-source") String dataSourceName) {
-    if (dataSourceName == null) {
-      return;
-    }
-
-    try {
-      InitialContext context = new InitialContext();
-      ds = (DataSource) context.lookup(dataSourceName);
-    } catch (NamingException e) {
-      throw new RuntimeException(e);
-    }
+    this.dataSource = dataSource;
   }
 
   /**
@@ -64,7 +47,7 @@ public class DefaultJDBCService implements JDBCService {
    */
   @Override
   public DataSource getDataSource() {
-    return ds;
+    return dataSource;
   }
 
   /**
@@ -78,11 +61,7 @@ public class DefaultJDBCService implements JDBCService {
     }
 
     try {
-      if (ds == null) {
-        return null;
-      }
-
-      c = ds.getConnection();
+      c = dataSource.getConnection();
       ConnectionContext.set(c);
 
       TransactionContext txnContext = manager.getCurrent();

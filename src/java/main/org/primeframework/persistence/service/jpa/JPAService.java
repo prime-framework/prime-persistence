@@ -26,7 +26,7 @@ import com.google.inject.ImplementedBy;
  *
  * @author Brian Pontarelli
  */
-@ImplementedBy(DefaultJPAService.class)
+@ImplementedBy(DriverAwareJPAService.class)
 public interface JPAService {
   /**
    * @return The EntityManagerFactory if JPA is enabled and correctly configured. This will return null if JPA is

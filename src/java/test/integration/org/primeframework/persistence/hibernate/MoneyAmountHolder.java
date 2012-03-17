@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2001-2010, Inversoft Inc., All Rights Reserved
+ * Copyright (c) 2001-2007, Inversoft Inc., All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,29 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.primeframework.persistence.service.jdbc;
+package org.primeframework.persistence.hibernate;
 
-import javax.sql.DataSource;
+import javax.persistence.Entity;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import org.hibernate.annotations.Type;
+import org.primeframework.persistence.domain.IntegerIdentifiable;
+import org.joda.money.Money;
 
 /**
- * This class is a provider for a JDBC DataSource. This uses the {@link JDBCService} to get the data source from.
+ * This is a test object for money.
  *
  * @author Brian Pontarelli
  */
-public class DataSourceProvider implements Provider<DataSource> {
-  private final JDBCService service;
+@Entity
+public class MoneyAmountHolder extends IntegerIdentifiable {
+  @Type(type = "org.primeframework.persistence.hibernate.MoneyAmountUSDType")
+  private Money money;
 
-  @Inject
-  public DataSourceProvider(JDBCService service) {
-    this.service = service;
+  public Money getMoney() {
+    return money;
   }
 
-  @Override
-  public DataSource get() {
-    return service.getDataSource();
+  public void setMoney(Money money) {
+    this.money = money;
   }
 }

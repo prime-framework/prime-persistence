@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.primeframework.domain.commerce;
+package org.primeframework.persistence.hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

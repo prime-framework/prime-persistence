@@ -22,7 +22,7 @@
       <artifact group="inject.javax" name="inject-api" version="1.0"/>
       <artifact group="mysql.com" name="mysql-connector-java" version="5.1.6"/>
       <artifact group="postgresql.org" name="postgresql-jdbc4" version="9.0.801"/>
-      <artifact group="servlet.javax" name="servlet-api" version="2.4"/>
+      <artifact group="servlet.javax" name="servlet-api" version="2.5"/>
     </artifact-group>
     <artifact-group type="compile">
       <artifact group="aopalliance.sourceforge.net" name="aopalliance" version="1.0"/>
@@ -40,7 +40,7 @@
     </artifact-group>
     <artifact-group type="test-compile">
       <artifact group="primeframework.org" name="prime-mock" version="1.0-{integration}"/>
-      <artifact group="easymock.org" name="easymock" version="2.2"/>
+      <artifact group="easymock.org" name="easymock" version="2.3"/>
       <artifact group="testng.org" name="testng" version="5.11"/>
     </artifact-group>
   </dependencies>

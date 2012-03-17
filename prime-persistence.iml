@@ -60,17 +60,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="servlet-api-2.4.jar">
-        <CLASSES>
-          <root url="jar://$SAVANT_REPOSITORY$/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$SAVANT_REPOSITORY$/javax/servlet/servlet-api/2.4/servlet-api-2.4-src.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="testng-5.11.jar">
         <CLASSES>
           <root url="jar://$SAVANT_REPOSITORY$/org/testng/testng/5.11/testng-5.11.jar!/" />
@@ -78,28 +67,6 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://$SAVANT_REPOSITORY$/org/testng/testng/5.11/testng-5.11-src.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="jcatapult-mock-2.0-IB20110930173420751.jar">
-        <CLASSES>
-          <root url="jar://$SAVANT_REPOSITORY$/org/jcatapult/jcatapult-mock/2.0-{integration}/jcatapult-mock-2.0-IB20110930173420751.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$SAVANT_REPOSITORY$/org/jcatapult/jcatapult-mock/2.0-{integration}/jcatapult-mock-2.0-IB20110930173420751-src.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-fileupload-1.2.1.jar">
-        <CLASSES>
-          <root url="jar://$SAVANT_REPOSITORY$/org/apache/commons/commons-fileupload/1.2.1/commons-fileupload-1.2.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$SAVANT_REPOSITORY$/org/apache/commons/commons-fileupload/1.2.1/commons-fileupload-1.2.1-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

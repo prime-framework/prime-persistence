@@ -15,10 +15,23 @@
  */
 package org.primeframework.persistence.service.jpa;
 
+import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.sql.DataSource;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import org.primeframework.persistence.service.DatabaseType;
+import org.primeframework.persistence.service.DatabaseType.Database;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.name.Named;
 
 /**
  * This class is a Guice provider that provider access to the EntityManagerFactory.
@@ -26,14 +39,40 @@ import com.google.inject.Provider;
  * @author Brian Pontarelli
  */
 public class EntityManagerFactoryProvider implements Provider<EntityManagerFactory> {
-  private final JPAService service;
-
+  private final static Logger logger = Logger.getLogger(EntityManagerFactoryProvider.class.getName());
+  private final DataSource dataSource;
+  private final String persistenceUnit;
+  
   @Inject
-  public EntityManagerFactoryProvider(JPAService service) {
-    this.service = service;
+  public EntityManagerFactoryProvider(DataSource dataSource, @Named("jpa.unit") String persistenceUnit) {
+    this.dataSource = dataSource;
+    this.persistenceUnit = persistenceUnit;
   }
 
   public EntityManagerFactory get() {
-    return service.getFactory();
+    Map<String, String> properties = new HashMap<String, String>();
+    try {
+      properties.put("hibernate.dialect", dialect(dataSource));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+    return Persistence.createEntityManagerFactory(persistenceUnit, properties);
+  }
+
+  private String dialect(DataSource dataSource) throws NamingException, SQLException {
+    Connection c = dataSource.getConnection();
+    String name = c.toString();
+    c.close();
+
+    if (name.contains("mysql")) {
+      logger.fine("Connecting to a MySQL database");
+      DatabaseType.database = Database.MYSQL;
+      return "org.hibernate.dialect.MySQL5InnoDBDialect";
+    } else {
+      logger.fine("Connecting to a PostgreSQL database");
+      DatabaseType.database = Database.POSTGRESQL;
+      return "org.hibernate.dialect.PostgreSQLDialect";
+    }
   }
 }

@@ -15,23 +15,17 @@
  */
 package org.primeframework.persistence.service.jpa;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.persistence.Persistence;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
-import org.primeframework.persistence.service.DatabaseType;
-import org.primeframework.persistence.service.DatabaseType.Database;
+import java.io.Closeable;
+
+import org.primeframework.persistence.txn.TransactionContext;
 import org.primeframework.persistence.txn.TransactionContextManager;
+import org.primeframework.persistence.txn.jpa.JPATransactionalResource;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.inject.name.Named;
 
 /**
  * This class implements the JPA service. It is a singleton and in the constructor it sets up the EntityManagerFactory.
@@ -47,42 +41,73 @@ import com.google.inject.name.Named;
  * @author Brian Pontarelli
  */
 @Singleton
-public class DriverAwareJPAService extends AbstractJPAService {
-  private static final Logger logger = Logger.getLogger(DefaultJPAService.class.getName());
+public class DriverAwareJPAService implements JPAService, Closeable {
+  private final TransactionContextManager txnContextManager;
+  private final EntityManagerFactory entityManagerFactory;
 
   @Inject
-  public DriverAwareJPAService(TransactionContextManager txnContextManager,
-                               @Named("jpa.enabled") boolean jpaEnabled,
-                               @Named("jpa.unit") String persistenceUnit,
-                               @Named("non-jta-data-source") String dataSourceJndiName)
-  throws NamingException, SQLException {
-    super(txnContextManager);
-    Map<String, String> properties = new HashMap<String, String>();
-    properties.put("hibernate.dialect", dialect(dataSourceJndiName));
+  protected DriverAwareJPAService(TransactionContextManager txnContextManager, EntityManagerFactory entityManagerFactory) {
+    this.txnContextManager = txnContextManager;
+    this.entityManagerFactory = entityManagerFactory;
+  }
 
-    if (jpaEnabled) {
-      logger.fine("JPA is enabled");
-      emf = Persistence.createEntityManagerFactory(persistenceUnit, properties);
-    } else {
-      logger.fine("JPA is disabled");
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public EntityManagerFactory getFactory() {
+    return entityManagerFactory;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public EntityManager setupEntityManager() {
+    EntityManager em = EntityManagerContext.get();
+    if (em != null) {
+      return em;
+    }
+
+    try {
+      if (entityManagerFactory == null) {
+        return null;
+      }
+
+      em = entityManagerFactory.createEntityManager();
+      EntityManagerContext.set(em);
+
+      TransactionContext txnContext = txnContextManager.getCurrent();
+      if (txnContext != null) {
+        txnContext.add(new JPATransactionalResource(em));
+      }
+
+      return em;
+    } catch (Throwable t) {
+      throw new RuntimeException(t);
     }
   }
 
-  private String dialect(String dataSourceJndiName) throws NamingException, SQLException {
-    InitialContext context = new InitialContext();
-    DataSource ds = (DataSource) context.lookup(dataSourceJndiName);
-    Connection c = ds.getConnection();
-    String name = c.toString();
-    c.close();
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void tearDownEntityManager() {
+    // Clear out the context just to be safe.
+    EntityManager entityManager = EntityManagerContext.get();
+    if (entityManager != null) {
+      EntityManagerContext.remove();
+      entityManager.close();
+    }
+  }
 
-    if (name.contains("mysql")) {
-      logger.fine("Connecting to a MySQL database");
-      DatabaseType.database = Database.MYSQL;
-      return "org.hibernate.dialect.MySQL5InnoDBDialect";
-    } else {
-      logger.fine("Connecting to a PostgreSQL database");
-      DatabaseType.database = Database.POSTGRESQL;
-      return "org.hibernate.dialect.PostgreSQLDialect";
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void close() {
+    if (entityManagerFactory != null) {
+      entityManagerFactory.close();
     }
   }
 }

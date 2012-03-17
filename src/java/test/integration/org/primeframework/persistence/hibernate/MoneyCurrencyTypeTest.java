@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.primeframework.domain.commerce;
+package org.primeframework.persistence.hibernate;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,30 +32,18 @@ import static org.testng.Assert.*;
  *
  * @author Brian Pontarelli
  */
-public class MoneyAmountUSDTypeTest extends BaseJPATest {
+public class MoneyCurrencyTypeTest extends BaseJPATest {
   @Inject public PersistenceService persistenceService;
 
   @Test
   public void save() {
-    MoneyAmountHolder holder = new MoneyAmountHolder();
-    holder.setMoney(Money.of(CurrencyUnit.getInstance("USD"), 1.99));
+    MoneyHolder holder = new MoneyHolder();
+    holder.setMoney(Money.of(CurrencyUnit.getInstance("EUR"), 1.99));
     persistenceService.persist(holder);
 
-    List<MoneyAmountHolder> holders = persistenceService.findAllByType(MoneyAmountHolder.class);
+    List<MoneyHolder> holders = persistenceService.findAllByType(MoneyHolder.class);
     assertEquals(holders.size(), 1);
     assertEquals(holders.get(0).getMoney().getAmount(), new BigDecimal("1.99"));
-    assertEquals(holders.get(0).getMoney().getCurrencyUnit(), CurrencyUnit.getInstance("USD"));
-  }
-
-  @Test
-  public void badCurrency() {
-    MoneyAmountHolder holder = new MoneyAmountHolder();
-    holder.setMoney(Money.of(CurrencyUnit.getInstance("EUR"), 1.99));
-    try {
-      persistenceService.persist(holder);
-      fail("Should have failed");
-    } catch (Exception e) {
-      // Expected
-    }
+    assertEquals(holders.get(0).getMoney().getCurrencyUnit(), CurrencyUnit.getInstance("EUR"));
   }
 }
