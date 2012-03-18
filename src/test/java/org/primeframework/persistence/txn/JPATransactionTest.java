@@ -19,9 +19,9 @@ package org.primeframework.persistence.txn;
 import javax.sql.RowSet;
 import java.sql.SQLException;
 
+import org.primeframework.persistence.BaseJPATest;
 import org.primeframework.persistence.service.jpa.PersistenceService;
 import org.primeframework.persistence.service.jpa.User;
-import org.primeframework.persistence.test.BaseJPATest;
 import org.primeframework.persistence.test.JDBCTestHelper;
 import org.primeframework.persistence.txn.annotation.Transactional;
 import org.testng.annotations.Test;

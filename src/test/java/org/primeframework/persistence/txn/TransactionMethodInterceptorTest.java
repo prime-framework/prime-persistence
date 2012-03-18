@@ -16,7 +16,7 @@
 package org.primeframework.persistence.txn;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.primeframework.persistence.test.BaseJPATest;
+import org.primeframework.persistence.BaseJPATest;
 import org.primeframework.persistence.txn.annotation.Transactional;
 import org.testng.annotations.Test;
 

@@ -13,11 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.primeframework.persistence.test;
+package org.primeframework.persistence;
 
 import java.sql.SQLException;
 
 import org.primeframework.persistence.service.jdbc.ConnectionContext;
+import org.primeframework.persistence.test.JDBCTestHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 

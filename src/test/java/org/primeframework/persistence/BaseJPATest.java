@@ -13,11 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.primeframework.persistence.test;
+package org.primeframework.persistence;
 
 import javax.naming.NamingException;
 
 import org.primeframework.persistence.service.DatabaseType;
+import org.primeframework.persistence.test.JPATestHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;

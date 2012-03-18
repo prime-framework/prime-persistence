@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.primeframework.persistence.test;
+package org.primeframework.persistence;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import org.primeframework.mock.jndi.MockJNDI;
 import org.primeframework.persistence.guice.PersistenceModule;
 import org.primeframework.persistence.service.DatabaseType;
+import org.primeframework.persistence.test.JDBCTestHelper;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -41,7 +42,7 @@ public abstract class BasePersistenceTest {
   public static void setup() throws NamingException {
     jndi.activate();
     DatabaseType.setFromSystemProperty("database.type");
-    JDBCTestHelper.initialize(DatabaseType.database, "prime_persistence_test", "java:comp/env/jdbc/prime_persistence");
+    JDBCTestHelper.initialize(DatabaseType.database, "prime_persistence_test", "java:comp/env/jdbc/prime-persistence");
 
     injector = Guice.createInjector(new PersistenceModule(true, "punit") {
       @Override

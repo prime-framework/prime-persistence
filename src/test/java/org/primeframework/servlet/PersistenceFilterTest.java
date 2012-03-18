@@ -23,12 +23,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import org.primeframework.persistence.BaseJPATest;
 import org.primeframework.persistence.service.jdbc.ConnectionContext;
 import org.primeframework.persistence.service.jdbc.JDBCService;
 import org.primeframework.persistence.service.jpa.EntityManagerContext;
 import org.primeframework.persistence.service.jpa.JPAService;
 import org.primeframework.persistence.servlet.PersistenceFilter;
-import org.primeframework.persistence.test.BaseJPATest;
 import org.testng.annotations.Test;
 
 import static org.easymock.EasyMock.*;

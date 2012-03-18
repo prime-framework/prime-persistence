@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.primeframework.persistence.test.BaseJPATest;
+import org.primeframework.persistence.BaseJPATest;
 import org.testng.annotations.Test;
 
 import static org.primeframework.persistence.test.JDBCTestHelper.*;

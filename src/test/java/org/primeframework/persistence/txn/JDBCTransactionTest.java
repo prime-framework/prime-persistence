@@ -20,9 +20,9 @@ import javax.sql.RowSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.primeframework.persistence.BaseJDBCTest;
 import org.primeframework.persistence.service.DatabaseType;
 import org.primeframework.persistence.service.jpa.User;
-import org.primeframework.persistence.test.BaseJDBCTest;
 import org.primeframework.persistence.test.JDBCTestHelper;
 import org.primeframework.persistence.test.JPATestHelper;
 import org.primeframework.persistence.txn.annotation.Transactional;
