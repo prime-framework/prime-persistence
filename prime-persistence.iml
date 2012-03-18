@@ -17,14 +17,11 @@
     <output-test url="file://$MODULE_DIR$/target/classes/test/integration" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/java/main" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/conf/main" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/conf/test/integration" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/java/test/integration" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/java/test/unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
-      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
@@ -103,17 +100,6 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://$USER_HOME$/.gradle/caches/artifacts-8/filestore/org.joda/joda-money/0.6/source/e9b772665879e6f31a96d7750deebfd2359417ff/joda-money-0.6-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-8/filestore/javax.persistence/persistence-api/1.0/jar/5725f57873e05e068803e2bf9d5a8ea3740ffec5/persistence-api-1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-8/filestore/javax.persistence/persistence-api/1.0/source/2773a7910e8f0c7d59749dc4fcef2a4b94fcf85a/persistence-api-1.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

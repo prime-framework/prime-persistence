@@ -35,18 +35,18 @@ public class MySQLTools {
   /**
    * Sets up the connection pool to MySQL and puts that into the JNDI tree.
    *
-   * @param jndi   The JDNI context.
-   * @param dbName the db name
+   * @param jndi     The JDNI context.
+   * @param dbName   the db name
+   * @param jndiName The JNDI name.
    * @return The DataSource and never null.
    * @throws NamingException If the binding fails.
    */
-  public static DataSource setup(InitialContext jndi, String dbName) throws NamingException {
+  public static DataSource setup(InitialContext jndi, String dbName, String jndiName) throws NamingException {
     String url = "jdbc:mysql://localhost:3306/" + dbName + "?user=dev&password=dev";
     MysqlDataSource dataSource = new MysqlDataSource();
     dataSource.setURL(url);
     dataSource.setAutoReconnect(true);
 
-    String jndiName = "java:comp/env/jdbc/" + dbName.replace("_", "-").replace("-test", "");
     jndi.bind(jndiName, dataSource);
 
     logger.info("DB Url [" + url + "]");

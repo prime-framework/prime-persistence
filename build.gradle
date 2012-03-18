@@ -32,8 +32,7 @@ dependencies {
     "org.apache.commons:commons-lang3:3.1",
     "org.hibernate:hibernate-core:4.1.1.Final",
     "org.hibernate:hibernate-entitymanager:4.1.1.Final",
-    "org.joda:joda-money:0.6",
-    "javax.persistence:persistence-api:1.0"
+    "org.joda:joda-money:0.6"
   )
   runtime(
     "org.jadira.usertype:usertype.jodatime:2.0"

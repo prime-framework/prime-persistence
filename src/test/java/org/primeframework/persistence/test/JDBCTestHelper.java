@@ -40,59 +40,30 @@ import com.sun.rowset.CachedRowSetImpl;
 public class JDBCTestHelper {
   public static final Logger logger = Logger.getLogger(JDBCTestHelper.class.getName());
   public static DataSource dataSource;
-  public static String databaseName;
-  public static String databaseType;
 
   /**
-   * Allows test classes to setup different databases. The default is to setup a database connection to the database
-   * that has the same name as the project (dashes are replaced by underscores).
+   * Constructs the DataSource and places it in the JNDI tree for Hibernate.
    *
-   * @param databaseName The database name.
-   */
-  public static void setDatabaseName(String databaseName) {
-    JDBCTestHelper.databaseName = databaseName;
-  }
-
-  /**
-   * Allows test classes to setup different databases. This is a data source so that PostgreSQL or Oracle database can
-   * be setup.
-   *
-   * @param dataSource The data source to put into the JNDI tree.
-   */
-  public static void setDataSource(DataSource dataSource) {
-    JDBCTestHelper.dataSource = dataSource;
-  }
-
-  /**
-   * Constructs the JDBC connection pool, places it in the JNDI tree given.
-   *
-   * @return The database type (either the string <strong>mysql</strong> or <strong>postgresql</strong>)
+   * @param type         The database type to setup the DataSource for.
+   * @param databaseName The database name to connect to.
+   * @param jndiName     The JDNI name to put the DataSource under.
    * @throws NamingException If setting the data source into the JNDI tree fails.
    */
-  public static String initialize() throws NamingException {
+  public static void initialize(Database type, String databaseName, String jndiName) throws NamingException {
     InitialContext jndi = new InitialContext();
     if (dataSource == null) {
-      String dbType = System.getProperty("database.type");
-      if (dbType == null || dbType.equals("mysql")) {
+      if (type == Database.MYSQL) {
         logger.info("+++++++++++++++++++++++++++++++ Setting up MySQL data source for testing +++++++++++++++++++++++++++++++");
-        dataSource = MySQLTools.setup(jndi, databaseName);
+        dataSource = MySQLTools.setup(jndi, databaseName, jndiName);
         DatabaseType.database = Database.MYSQL;
-
-        // This is required to tell Hibernate to use transactions
-        databaseType = "mysql";
-      } else if (dbType.equals("postgresql")) {
+      } else if (type == Database.POSTGRESQL) {
         logger.info("+++++++++++++++++++++++++++++++ Setting up PostgreSQL data source for testing +++++++++++++++++++++++++++++++");
-        dataSource = PostgreSQLTools.setup(jndi, databaseName);
+        dataSource = PostgreSQLTools.setup(jndi, databaseName, jndiName);
         DatabaseType.database = Database.POSTGRESQL;
-
-        // This is required to tell Hibernate to use postgres to create the tables
-        databaseType = "postgresql";
       } else {
-        throw new RuntimeException("Invalid database type for testing [" + dbType + "]");
+        throw new RuntimeException("Invalid database type for testing [" + type + "]");
       }
     }
-
-    return databaseType;
   }
 
   /**

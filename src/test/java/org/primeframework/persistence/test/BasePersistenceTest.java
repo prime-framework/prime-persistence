@@ -16,9 +16,11 @@
 package org.primeframework.persistence.test;
 
 import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import org.primeframework.mock.jndi.MockJNDI;
 import org.primeframework.persistence.guice.PersistenceModule;
+import org.primeframework.persistence.service.DatabaseType.Database;
 import org.testng.annotations.BeforeSuite;
 
 import com.google.inject.Guice;
@@ -36,9 +38,13 @@ public abstract class BasePersistenceTest {
   @BeforeSuite
   public static void setup() throws NamingException {
     jndi.activate();
-    JDBCTestHelper.setDatabaseName("prime_persistence_test");
-    JDBCTestHelper.initialize();
+    JDBCTestHelper.initialize(Database.valueOf(System.getProperty("database.type").toUpperCase()), "prime_persistence_test", "java:comp/env/jdbc/prime_persistence");
 
-    injector = Guice.createInjector(new PersistenceModule(true, "punit", "java:comp/env/jdbc/prime-persistence"));
+    injector = Guice.createInjector(new PersistenceModule(true, "punit") {
+      @Override
+      protected void bindDataSource() {
+        bind(DataSource.class).toInstance(JDBCTestHelper.dataSource);
+      }
+    });
   }
 }

@@ -48,16 +48,16 @@
     <wildcardResourcePatterns>
       <entry name="?*.html" />
       <entry name="?*.properties" />
-      <entry name="?*.jpeg" />
       <entry name="?*.gif" />
+      <entry name="?*.jpeg" />
       <entry name="!?*.groovy" />
-      <entry name="?*.dtd" />
-      <entry name="?*.jpg" />
       <entry name="?*.png" />
+      <entry name="?*.jpg" />
+      <entry name="?*.dtd" />
       <entry name="?*.tld" />
-      <entry name="!?*.java" />
-      <entry name="?*.ftl" />
       <entry name="?*.xml" />
+      <entry name="?*.ftl" />
+      <entry name="!?*.java" />
     </wildcardResourcePatterns>
     <annotationProcessing enabled="false" useClasspath="true" />
   </component>

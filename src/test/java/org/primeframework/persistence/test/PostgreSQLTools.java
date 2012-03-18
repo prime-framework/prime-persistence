@@ -33,20 +33,20 @@ public class PostgreSQLTools {
   /**
    * Sets up the connection pool to PostgreSQL and puts that into the JNDI tree.
    *
-   * @param jndi   The JNDI context.
-   * @param dbName The database name to connect to as well as the name to put the DataSource into the JNDI context under
-   *               (including the java:comp/env/jdbc/ prefix)
+   * @param jndi     The JNDI context.
+   * @param dbName   The database name to connect to as well as the name to put the DataSource into the JNDI context
+   *                 under (including the java:comp/env/jdbc/ prefix)
+   * @param jndiName The JNDI name.
    * @return The DataSource and never null.
    * @throws NamingException If the JNDI binding fails.
    */
-  public static PGSimpleDataSource setup(InitialContext jndi, String dbName) throws NamingException {
+  public static PGSimpleDataSource setup(InitialContext jndi, String dbName, String jndiName) throws NamingException {
     PGSimpleDataSource pds = new PGSimpleDataSource();
     pds.setDatabaseName(dbName);
     pds.setServerName("localhost");
     pds.setUser("dev");
     pds.setPassword("dev");
 
-    String jndiName = "java:comp/env/jdbc/" + dbName.replace("_", "-").replace("-test", "");
     jndi.bind(jndiName, pds);
 
     logger.info("JNDI name is [" + jndiName + "]");
