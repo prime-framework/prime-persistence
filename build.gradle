@@ -1,0 +1,92 @@
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "testng"
+apply plugin: "database"
+
+group = "org.primeframework"
+version = "1.0-SNAPSHOT"
+description = "The Prime Persistence Framework"
+sourceCompatibility = 1.6
+
+database.types = [database.mysql, database.postgresql]
+
+configurations {
+  compileOnly {
+    visible = false
+  }
+
+  testCompile.extendsFrom(compileOnly)
+  testRuntime.extendsFrom(databasePlugin)
+}
+
+dependencies {
+  compileOnly(
+    "javax.servlet:servlet-api:2.4",
+    "mysql:mysql-connector-java:5.1.18",
+    "postgresql:postgresql:9.1-901-1.jdbc4"
+  )
+  compile(
+    "aopalliance:aopalliance:1.0",
+    "com.google.inject:guice:3.0",
+    "joda-time:joda-time:2.1",
+    "org.apache.commons:commons-lang3:3.1",
+    "org.hibernate:hibernate-core:4.1.1.Final",
+    "org.hibernate:hibernate-entitymanager:4.1.1.Final",
+    "org.joda:joda-money:0.6",
+    "javax.persistence:persistence-api:1.0"
+  )
+  runtime(
+    "org.jadira.usertype:usertype.jodatime:2.0"
+  )
+  testCompile(
+    "org.testng:testng:6.3.1",
+    "org.easymock:easymock:3.1",
+    "org.primeframework:prime-mock:1.0-SNAPSHOT"
+  )
+}
+
+repositories {
+  mavenCentral()
+  ivy {
+    name = "ivyLocal"
+    url "${project.gradle.gradleUserHomeDir}/integration-cache"
+  }
+}
+
+uploadArchives {
+  repositories {
+    add project.repositories.ivyLocal
+  }
+}
+
+// gradle doesn't provide the capability to define 'compile only'
+// dependencies (e.g maven 'provided') so this script-block below adds it
+sourceSets {
+  main {
+    compileClasspath += configurations.compileOnly
+  }
+}
+
+test {
+  dependsOn createDatabaseTest
+}
+
+task srcJar(type: Jar) {
+  from sourceSets.main.java
+  classifier = "sources"
+}
+
+buildscript {
+  repositories {
+    ivy {
+      url "${project.gradle.gradleUserHomeDir}/integration-cache"
+    }
+  }
+  dependencies {
+    classpath([
+      "com.inversoft.gradle:plugin-integration:1.0-SNAPSHOT",
+      "com.inversoft.gradle:plugin-testng:1.0-SNAPSHOT",
+      "com.inversoft.gradle:plugin-database:1.0-SNAPSHOT"
+    ])
+  }
+}
