@@ -7,15 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is a type converter for the thin JDBC wrappers to handle the conversion between Java objects and SQL types.
- * It currently uses a static inner class to store the converters. This means that there is only a single converter per
- * type and you can't have different converters used in different places. This is the most general handling of converters
- * and the fastest.
+ * This class is a type converter for the thin JDBC wrappers to handle the conversion between Java objects and SQL
+ * types. It currently uses a static inner class to store the converters. This means that there is only a single
+ * converter per type and you can't have different converters used in different places. This is the most general
+ * handling of converters and the fastest.
  *
  * @author Brian Pontarelli
  */
 public interface TypeConverter<T> {
   Object convertToSQL(T object);
+
   T convertFromSQL(Object object);
 
   class Converters {

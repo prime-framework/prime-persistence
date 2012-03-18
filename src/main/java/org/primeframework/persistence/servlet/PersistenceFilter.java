@@ -29,9 +29,9 @@ import org.primeframework.persistence.service.jpa.JPAService;
 import com.google.inject.Injector;
 
 /**
- * This class is the Prime Persistence workflow that cleans up all the persistence resources after the request has
- * been completed. This closes the JDBC connection, releases the JPA entity manager, and removes the transaction context
- * (if one exists).
+ * This class is the Prime Persistence workflow that cleans up all the persistence resources after the request has been
+ * completed. This closes the JDBC connection, releases the JPA entity manager, and removes the transaction context (if
+ * one exists).
  *
  * @author Brian Pontarelli
  */

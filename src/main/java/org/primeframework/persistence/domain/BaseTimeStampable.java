@@ -33,7 +33,7 @@ public abstract class BaseTimeStampable extends IntegerIdentifiable implements T
   @Type(type = "org.primeframework.persistence.hibernate.DateTimeType")
   @Column(name = "insert_date", nullable = false, updatable = false)
   public DateTime insertDate;
-  
+
   @Type(type = "org.primeframework.persistence.hibernate.DateTimeType")
   @Column(name = "update_date", nullable = false)
   public DateTime updateDate;

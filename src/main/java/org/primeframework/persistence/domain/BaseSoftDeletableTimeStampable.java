@@ -19,8 +19,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 /**
- * This class implements the Identifiable, Timestampable and SoftDeletable interfaces and extends BaseTimeStampable
- * for a primary key and the date fields.
+ * This class implements the Identifiable, Timestampable and SoftDeletable interfaces and extends BaseTimeStampable for
+ * a primary key and the date fields.
  *
  * @author Brian Pontarelli
  */

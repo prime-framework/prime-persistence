@@ -30,8 +30,8 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 /**
- * This class is a hibernate type for storing currencies in the database using only a single column for the amount.
- * This always assumes USD for the currency.
+ * This class is a hibernate type for storing currencies in the database using only a single column for the amount. This
+ * always assumes USD for the currency.
  *
  * @author Brian Pontarelli
  */

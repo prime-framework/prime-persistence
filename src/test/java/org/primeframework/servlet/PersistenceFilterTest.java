@@ -54,7 +54,7 @@ public class PersistenceFilterTest extends BaseJPATest {
     ServletContext context = createStrictMock(ServletContext.class);
     expect(context.getAttribute("foo")).andReturn(injector);
     replay(context);
-    
+
     FilterConfig config = createStrictMock(FilterConfig.class);
     expect(config.getInitParameter("injector-key")).andReturn("foo");
     expect(config.getServletContext()).andReturn(context);
@@ -68,7 +68,7 @@ public class PersistenceFilterTest extends BaseJPATest {
 
     HttpServletResponse response = createStrictMock(HttpServletResponse.class);
     replay(response);
-    
+
     FilterChain chain = createStrictMock(FilterChain.class);
     chain.doFilter(request, response);
     replay(chain);

@@ -17,7 +17,6 @@ package org.primeframework.persistence.service.jpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-
 import java.io.Closeable;
 
 import org.primeframework.persistence.txn.TransactionContext;

@@ -20,8 +20,9 @@ import javax.sql.DataSource;
 
 import org.primeframework.mock.jndi.MockJNDI;
 import org.primeframework.persistence.guice.PersistenceModule;
-import org.primeframework.persistence.service.DatabaseType.Database;
+import org.primeframework.persistence.service.DatabaseType;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -31,6 +32,7 @@ import com.google.inject.Injector;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "integration")
 public abstract class BasePersistenceTest {
   public static final MockJNDI jndi = new MockJNDI();
   public static Injector injector;
@@ -38,7 +40,8 @@ public abstract class BasePersistenceTest {
   @BeforeSuite
   public static void setup() throws NamingException {
     jndi.activate();
-    JDBCTestHelper.initialize(Database.valueOf(System.getProperty("database.type").toUpperCase()), "prime_persistence_test", "java:comp/env/jdbc/prime_persistence");
+    DatabaseType.setFromSystemProperty("database.type");
+    JDBCTestHelper.initialize(DatabaseType.database, "prime_persistence_test", "java:comp/env/jdbc/prime_persistence");
 
     injector = Guice.createInjector(new PersistenceModule(true, "punit") {
       @Override

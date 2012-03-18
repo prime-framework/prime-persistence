@@ -32,8 +32,8 @@ import static com.google.inject.matcher.Matchers.*;
 import com.google.inject.name.Names;
 
 /**
- * This module should be used for JPA or JDBC support. It sets up the injection for all of the JPA classes as well
- * as the JDBC classes.
+ * This module should be used for JPA or JDBC support. It sets up the injection for all of the JPA classes as well as
+ * the JDBC classes.
  *
  * @author Brian Pontarelli
  */

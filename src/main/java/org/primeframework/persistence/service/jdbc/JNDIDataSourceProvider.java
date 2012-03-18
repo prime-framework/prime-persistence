@@ -29,7 +29,7 @@ import com.google.inject.Provider;
  */
 public class JNDIDataSourceProvider implements Provider<DataSource> {
   private final String jndiName;
-  
+
   public JNDIDataSourceProvider(String jndiName) {
     this.jndiName = jndiName;
   }

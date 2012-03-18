@@ -25,7 +25,7 @@ public class InsertGenerator {
   private final StringBuilder build = new StringBuilder();
   private String insert;
   private int valuesCount = 0;
-  
+
   public InsertGenerator() {
   }
 
@@ -58,7 +58,7 @@ public class InsertGenerator {
       } else {
         build.append(value.toString());
       }
-      
+
       count++;
     }
 

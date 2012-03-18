@@ -25,6 +25,7 @@ import static org.testng.Assert.*;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class InsertTest {
   @Test
   public void noParams() throws SQLException {
@@ -167,7 +168,7 @@ public class InsertTest {
   @Test
   public void objectsConvert() throws Exception {
     TypeConverter.Converters.register(TestType.class, new TestTypeConverter());
-    
+
     PreparedStatement ps = createStrictMock(PreparedStatement.class);
     ps.setObject(1, "test1");
     ps.setObject(2, "test2");

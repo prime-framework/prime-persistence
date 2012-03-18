@@ -24,6 +24,7 @@ import static org.testng.Assert.*;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class DefaultTransactionContextManagerTest {
   @Test
   public void all() throws Exception {

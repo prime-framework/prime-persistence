@@ -20,9 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * <p>
- * This class is a builder for executing arbitrary SQL via JDBC.
- * </p>
+ * <p> This class is a builder for executing arbitrary SQL via JDBC. </p>
  *
  * @author Brian Pontarelli
  */

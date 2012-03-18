@@ -321,8 +321,8 @@ public interface PersistenceService {
   /**
    * Removes the object with the given type and primary key. Since this uses a primary key to remove the instance, this
    * method will only work with identified instances. In addition, if the object type passed in is {@link
-   * org.primeframework.persistence.domain.SoftDeletable} than this method will update the <strong>deleted</strong> flag and
-   * perform an update rather than a delete.
+   * org.primeframework.persistence.domain.SoftDeletable} than this method will update the <strong>deleted</strong> flag
+   * and perform an update rather than a delete.
    *
    * @param type The type of Object to remove.
    * @param id   The primary key of the Object to remove.
@@ -333,8 +333,8 @@ public interface PersistenceService {
   /**
    * Removes the object with the given type and primary key. Since this uses a primary key to remove the instance, this
    * method will only work with identified instances. In addition, if the object type passed in is {@link
-   * org.primeframework.persistence.domain.SoftDeletable} than this method will forcibly remove the instance and not update
-   * the <strong>deleted</strong> flag.
+   * org.primeframework.persistence.domain.SoftDeletable} than this method will forcibly remove the instance and not
+   * update the <strong>deleted</strong> flag.
    *
    * @param type The type of Object to remove.
    * @param id   The primary key of the Object to remove.

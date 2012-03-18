@@ -26,6 +26,7 @@ import static org.testng.Assert.*;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class UUIDToolsTest {
   @Test
   public void bidirectional() {

@@ -74,8 +74,8 @@ public class JPAPersistenceService implements PersistenceService {
 
   /**
    * Starts a new {@link EntityTransaction} if the current {@link EntityManager} doesn't already have an active
-   * transaction. If it does have an active transaction, then it still creates a transaction but it is a proxy that
-   * will ignore commit and rollback calls since it is effectively an outer transaction.
+   * transaction. If it does have an active transaction, then it still creates a transaction but it is a proxy that will
+   * ignore commit and rollback calls since it is effectively an outer transaction.
    *
    * @return The transaction.
    */
@@ -147,8 +147,8 @@ public class JPAPersistenceService implements PersistenceService {
 
   /**
    * This is the internal method that performs the find but also determines if the Object is a {@link
-   * org.primeframework.persistence.domain.SoftDeletable} and appends "where eb.deleted = false" if the includeDeleted is
-   * false.
+   * org.primeframework.persistence.domain.SoftDeletable} and appends "where eb.deleted = false" if the includeDeleted
+   * is false.
    *
    * @param type           The type to find.
    * @param includeDeleted Determines if this should return all the instances of the Object including those instances
@@ -182,8 +182,8 @@ public class JPAPersistenceService implements PersistenceService {
 
   /**
    * This is the internal method that performs the count but also determines if the Object is a {@link
-   * org.primeframework.persistence.domain.SoftDeletable} and appends "where eb.deleted = false" if the includeDeleted is
-   * false.
+   * org.primeframework.persistence.domain.SoftDeletable} and appends "where eb.deleted = false" if the includeDeleted
+   * is false.
    *
    * @param type           The type to count.
    * @param includeDeleted Determines if this should count all the instances of the Object including those instances
@@ -612,7 +612,8 @@ public class JPAPersistenceService implements PersistenceService {
    * Strips the package name to create a JPA persistable name that can be used in EJB-QL. For example:
    * <p/>
    * <table> <tr><th>Class</th><th>Return</th></tr> <tr><td>org.primeframework.project.domain.Photo</td><td>Photo</td>
-   * <tr><td>org.primeframework.project.Foo</td><td>Foo</td> <tr><td>NoPackageClass</td><td>NoPackageClass</td> </table>
+   * <tr><td>org.primeframework.project.Foo</td><td>Foo</td> <tr><td>NoPackageClass</td><td>NoPackageClass</td>
+   * </table>
    *
    * @param type The class to strip the package name from the fully qualified class name.
    * @return The name.

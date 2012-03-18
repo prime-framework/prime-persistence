@@ -18,8 +18,8 @@ package org.primeframework.persistence.hibernate;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.Type;
-import org.primeframework.persistence.domain.IntegerIdentifiable;
 import org.joda.money.Money;
+import org.primeframework.persistence.domain.IntegerIdentifiable;
 
 /**
  * This is a test object for money.

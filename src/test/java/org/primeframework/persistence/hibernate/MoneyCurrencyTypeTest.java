@@ -18,10 +18,10 @@ package org.primeframework.persistence.hibernate;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.primeframework.persistence.service.jpa.PersistenceService;
-import org.primeframework.persistence.test.BaseJPATest;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
+import org.primeframework.persistence.service.jpa.PersistenceService;
+import org.primeframework.persistence.test.BaseJPATest;
 import org.testng.annotations.Test;
 
 import com.google.inject.Inject;

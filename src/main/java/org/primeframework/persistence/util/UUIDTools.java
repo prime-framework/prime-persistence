@@ -58,6 +58,6 @@ public class UUIDTools {
     for (int i = 8; i < 16; i++) {
       ba[i] = (byte) (lsb >>> 8 * (7 - i));
     }
-     return ba;
+    return ba;
   }
 }

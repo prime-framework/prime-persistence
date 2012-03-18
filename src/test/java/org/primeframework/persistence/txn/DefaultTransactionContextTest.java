@@ -27,6 +27,7 @@ import static org.testng.Assert.*;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class DefaultTransactionContextTest {
   @Test
   public void notStarted() {

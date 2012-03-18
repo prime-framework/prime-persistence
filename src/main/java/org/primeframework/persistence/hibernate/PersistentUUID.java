@@ -40,7 +40,8 @@ import org.primeframework.persistence.util.UUIDTools;
  * Therefore, we have to determine the database type during the conversion and based on that handle the JDBC
  * interactions differently.
  * <p/>
- * This uses the {@link java.sql.Types#BINARY} type from JDBC to indicate to Hibernate how to properly handle the values.
+ * This uses the {@link java.sql.Types#BINARY} type from JDBC to indicate to Hibernate how to properly handle the
+ * values.
  *
  * @author Brian Pontarelli
  */
@@ -51,10 +52,10 @@ public class PersistentUUID implements UserType {
   @Override
   public int[] sqlTypes() {
     if (DatabaseType.database == Database.MYSQL) {
-      return new int[] {Types.BINARY};
+      return new int[]{Types.BINARY};
     }
 
-    return new int[] {Types.OTHER};
+    return new int[]{Types.OTHER};
   }
 
   /**
@@ -84,10 +85,10 @@ public class PersistentUUID implements UserType {
   }
 
   /**
-   * Handles getting the value from the result set. If the database is postgresql, this grabs the value directly from the
-   * result set and returns it. If it is MySQL, this converts the byte[] to a UUID.
+   * Handles getting the value from the result set. If the database is postgresql, this grabs the value directly from
+   * the result set and returns it. If it is MySQL, this converts the byte[] to a UUID.
    *
-   * @param rs The result set.
+   * @param rs    The result set.
    * @param names The name of the column.
    * @param owner Not used.
    * @return The UUID or null.
@@ -111,7 +112,7 @@ public class PersistentUUID implements UserType {
    * Sets the UUID into the prepared statement. This sets it in directly if the database is postgresql. If it is MySQL
    * it converts the UUID to a byte array and sets that in.
    *
-   * @param st The prepared statement to put the UUID into.
+   * @param st    The prepared statement to put the UUID into.
    * @param value The UUID.
    * @param index The index to use.
    * @throws SQLException If the set fails.
@@ -133,7 +134,7 @@ public class PersistentUUID implements UserType {
   }
 
   /**
-   * @return  False, UUID is not mutable.
+   * @return False, UUID is not mutable.
    */
   @Override
   public boolean isMutable() {

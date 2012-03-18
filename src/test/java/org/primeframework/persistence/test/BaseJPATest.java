@@ -17,6 +17,7 @@ package org.primeframework.persistence.test;
 
 import javax.naming.NamingException;
 
+import org.primeframework.persistence.service.DatabaseType;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -35,7 +36,7 @@ public abstract class BaseJPATest extends BasePersistenceTest {
    */
   @BeforeSuite
   public static void setUpJPA() throws NamingException {
-    JPATestHelper.initialize();
+    JPATestHelper.initialize(DatabaseType.database, "punit");
   }
 
   /**

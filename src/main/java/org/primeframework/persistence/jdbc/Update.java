@@ -76,7 +76,7 @@ public class Update extends BaseOperation<Update> {
     } else {
       firstIn = false;
     }
-    
+
     for (int i = 0; i < params.length; i++) {
       if (i > 0) {
         sql.append(",");
@@ -84,7 +84,7 @@ public class Update extends BaseOperation<Update> {
       sql.append("?");
       add(params[i]);
     }
-    
+
     return this;
   }
 

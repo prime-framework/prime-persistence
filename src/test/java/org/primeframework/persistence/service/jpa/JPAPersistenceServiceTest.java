@@ -478,8 +478,8 @@ public class JPAPersistenceServiceTest extends BaseJPATest {
    * Does the actual removal of the users from the database.
    *
    * @param id           Determines if the ID or Object method should be used.
-   * @param verifyExists Determines if the code should verify that the data was added to the DB or that it wasn't
-   *                     added to the DB. It won't be added to the DB if there is an outer transaction occurring.
+   * @param verifyExists Determines if the code should verify that the data was added to the DB or that it wasn't added
+   *                     to the DB. It won't be added to the DB if there is an outer transaction occurring.
    * @throws Exception If things get dicey.
    */
   private void doRemove(boolean id, boolean verifyExists) throws Exception {

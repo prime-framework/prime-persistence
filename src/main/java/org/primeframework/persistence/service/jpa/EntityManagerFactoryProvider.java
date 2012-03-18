@@ -19,7 +19,6 @@ import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -42,7 +41,7 @@ public class EntityManagerFactoryProvider implements Provider<EntityManagerFacto
   private final static Logger logger = Logger.getLogger(EntityManagerFactoryProvider.class.getName());
   private final DataSource dataSource;
   private final String persistenceUnit;
-  
+
   @Inject
   public EntityManagerFactoryProvider(DataSource dataSource, @Named("jpa.unit") String persistenceUnit) {
     this.dataSource = dataSource;

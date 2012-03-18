@@ -22,6 +22,7 @@ import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.primeframework.persistence.service.DatabaseType.Database;
 import org.primeframework.persistence.service.jpa.EntityManagerContext;
 
 /**
@@ -30,45 +31,47 @@ import org.primeframework.persistence.service.jpa.EntityManagerContext;
  * @author Brian Pontarelli
  */
 public class JPATestHelper {
-  public static String persistentUnit = "punit";
   public static EntityManagerFactory emf;
-
-  /**
-   * Constructs the EntityManager and puts it in the context.
-   */
-  public static void setUpEntityManager() {
-    EntityManager em = emf.createEntityManager();
-    EntityManagerContext.set(em);
-  }
-
-  /**
-   * This can be called in the Test classes constructor in order to set the JPA persistent unit to use. This is the same
-   * as the init parameter for the filter. This defaults to <em>punit</em>
-   *
-   * @param persistentUnit The persistent unit to use.
-   */
-  public static void setPersistentUnit(String persistentUnit) {
-    JPATestHelper.persistentUnit = persistentUnit;
-  }
 
   /**
    * Constructs the JDBC connection pool, places it in the JNDI tree given and then constructs an EntityManagerFactory.
    *
+   * @param type            The database type.
+   * @param databaseName    The database name.
+   * @param jndiName        The JNDI name to put the DataSource under.
+   * @param persistenceUnit The persistence unit.
    * @throws NamingException If putting the DataSource into JNDI fails.
    */
-  public static void initialize() throws NamingException {
+  public static void initialize(Database type, String databaseName, String jndiName, String persistenceUnit) throws NamingException {
     Map<String, String> properties = new HashMap<String, String>();
-    String dbType = JDBCTestHelper.initialize();
-    if (dbType == null || dbType.equals("mysql")) {
-      // This is required to tell Hibernate to use transactions
+    JDBCTestHelper.initialize(type, databaseName, jndiName);
+    if (type == Database.MYSQL) {
       properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
-    } else if (dbType.equals("postgresql")) {
-      // This is required to tell Hibernate to use postgres to create the tables
+    } else if (type == Database.POSTGRESQL) {
       properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
     }
 
     // Create the JPA EMF
-    emf = Persistence.createEntityManagerFactory(persistentUnit, properties);
+    emf = Persistence.createEntityManagerFactory(persistenceUnit, properties);
+  }
+
+  /**
+   * Constructs EntityManagerFactory and assumes that JNDI and the DataSource are already setup.
+   *
+   * @param type            The database type.
+   * @param persistenceUnit The persistence unit.
+   * @throws NamingException If putting the DataSource into JNDI fails.
+   */
+  public static void initialize(Database type, String persistenceUnit) throws NamingException {
+    Map<String, String> properties = new HashMap<String, String>();
+    if (type == Database.MYSQL) {
+      properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+    } else if (type == Database.POSTGRESQL) {
+      properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+    }
+
+    // Create the JPA EMF
+    emf = Persistence.createEntityManagerFactory(persistenceUnit, properties);
   }
 
   /**

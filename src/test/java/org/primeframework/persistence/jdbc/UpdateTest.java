@@ -17,6 +17,7 @@ import static org.testng.Assert.*;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class UpdateTest {
   @Test
   public void noParams() throws SQLException {
@@ -77,7 +78,7 @@ public class UpdateTest {
     u.startIn();
     u.addToIn(2, 3, 4);
     u.endIn();
-    
+
     int num = u.go();
     assertEquals(num, 2);
 

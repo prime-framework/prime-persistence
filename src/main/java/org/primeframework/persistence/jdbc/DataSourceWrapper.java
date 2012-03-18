@@ -21,8 +21,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * This class is a JDBC DataSource wrapper that provides all the methods as a standard JDBC DataSource passed
- * through. You can sub-class and override anything you want. Enjoy!
+ * This class is a JDBC DataSource wrapper that provides all the methods as a standard JDBC DataSource passed through.
+ * You can sub-class and override anything you want. Enjoy!
  *
  * @author Brian Pontarelli
  */

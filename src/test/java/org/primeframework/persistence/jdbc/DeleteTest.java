@@ -18,6 +18,7 @@ import static org.easymock.EasyMock.*;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class DeleteTest {
 
   @Test

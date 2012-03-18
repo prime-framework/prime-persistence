@@ -65,7 +65,7 @@ public class Insert extends BaseOperation<Insert> {
    * if there are no JPA annotations.
    *
    * @param type The type of objects to insert.
-   * @param <T> The type.
+   * @param <T>  The type.
    * @return The builder that is used to insert the objects with.
    */
   public <T> InsertObject<T> into(Class<T> type) {
@@ -73,7 +73,8 @@ public class Insert extends BaseOperation<Insert> {
   }
 
   /**
-   * Adds a bulk insert block. This appends the (?,?,?) format to the SQL. It also adds the given values ot the parameters.
+   * Adds a bulk insert block. This appends the (?,?,?) format to the SQL. It also adds the given values ot the
+   * parameters.
    *
    * @param params The value parameters.
    * @return This insert builder.
@@ -82,7 +83,7 @@ public class Insert extends BaseOperation<Insert> {
     if (sql.charAt(sql.length() - 1) == ')') {
       sql.append(",");
     }
-    
+
     sql.append("(");
     for (int i = 0; i < params.length; i++) {
       if (i > 0) {
@@ -179,7 +180,6 @@ public class Insert extends BaseOperation<Insert> {
   }
 
   /**
-   *
    * @param <T>
    */
   public class InsertObject<T> {
@@ -222,7 +222,7 @@ public class Insert extends BaseOperation<Insert> {
 
         Insert.this.add(values(type, columns.size(), object));
       }
-      
+
       return Insert.this.go();
     }
 
@@ -246,7 +246,7 @@ public class Insert extends BaseOperation<Insert> {
         if (trans != null) {
           continue;
         }
-        
+
         Column column = field.getAnnotation(Column.class);
         String name = "";
         if (column != null) {

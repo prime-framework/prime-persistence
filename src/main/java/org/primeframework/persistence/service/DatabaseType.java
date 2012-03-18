@@ -27,4 +27,13 @@ public class DatabaseType {
   }
 
   public static Database database;
+
+  /**
+   * Sets the database static reference from a system property (upper cased).
+   *
+   * @param propertyName The property name.
+   */
+  public static void setFromSystemProperty(String propertyName) {
+    database = Database.valueOf(System.getProperty(propertyName).toUpperCase());
+  }
 }

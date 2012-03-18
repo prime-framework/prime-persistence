@@ -21,6 +21,7 @@ import static org.testng.Assert.*;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class SelectTest {
   @Test
   public void noParamsNoResults() throws SQLException {
