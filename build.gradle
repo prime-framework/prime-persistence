@@ -59,7 +59,3 @@ dependencies {
 // Java config
 sourceCompatibility = 1.6
 database.types = [database.mysql, database.postgresql]
-
-//test {
-//  dependsOn createDatabaseTest
-//}
