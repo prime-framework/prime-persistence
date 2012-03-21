@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 
 import org.primeframework.persistence.service.DatabaseType;
 import org.primeframework.persistence.service.DatabaseType.Database;
+import org.primeframework.persistence.service.jdbc.ConnectionContext;
 
 import com.sun.rowset.CachedRowSetImpl;
 
@@ -65,6 +66,30 @@ public class JDBCTestHelper {
       }
     }
   }
+
+  /**
+   * Sets up a connection into the context for testing.
+   */
+  public static void setupForTest() {
+    try {
+      ConnectionContext.set(dataSource.getConnection());
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Tears down the connection from the context and closes it after the test has run.
+   */
+  public static void tearDownFromTest() {
+    try {
+      ConnectionContext.get().close();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    } finally {
+      ConnectionContext.remove();
+    }
+  } 
 
   /**
    * Executes the given SQL statement via plain old JDBC. This will be committed to the database. This SQL statement
