@@ -121,14 +121,10 @@ public class JPAPersistenceService implements PersistenceService {
    * Locks the object using the JPA {@link EntityManager#lock(Object, LockModeType)} method on the entity manager.
    *
    * @param obj  The object to lock.
-   * @param read The read flag to determine the lock mode.
+   * @param type The type.
    */
-  public void lock(Object obj, boolean read) {
-    if (read) {
-      entityManager.lock(obj, LockModeType.READ);
-    } else {
-      entityManager.lock(obj, LockModeType.WRITE);
-    }
+  public void lock(Object obj, LockModeType type) {
+    entityManager.lock(obj, type);
   }
 
   /**

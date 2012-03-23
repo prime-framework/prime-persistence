@@ -16,6 +16,7 @@
 package org.primeframework.persistence.service.jpa;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import java.util.List;
 import java.util.Map;
 
@@ -66,12 +67,9 @@ public interface PersistenceService {
    * This forces the given Object to be locked at the database level.
    *
    * @param obj  The object to lock.
-   * @param read If this is true, the lock will be a read lock. If it is false, the lock will be a write lock. Read
-   *             locks provide that the readability of the object will be serial. That is that the most current value in
-   *             the database will always be accessible to all transactions. Write locks usually imply that only
-   *             transactions that contain the most current data will be allowed to write to the object.
+   * @param type The lock type to use. This uses the JPA 2.0 LockModeType enum.
    */
-  void lock(Object obj, boolean read);
+  void lock(Object obj, LockModeType type);
 
   /**
    * This locates all instances of an Object by class. This could be extremely heavy weight if the number of Objects of
