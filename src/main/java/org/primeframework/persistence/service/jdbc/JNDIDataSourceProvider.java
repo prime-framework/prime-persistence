@@ -16,6 +16,7 @@
 package org.primeframework.persistence.service.jdbc;
 
 import javax.naming.InitialContext;
+import javax.naming.NameParser;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
@@ -38,7 +39,8 @@ public class JNDIDataSourceProvider implements Provider<DataSource> {
   public DataSource get() {
     try {
       InitialContext context = new InitialContext();
-      return (DataSource) context.lookup(jndiName);
+      NameParser parser = context.getNameParser("");
+      return (DataSource) context.lookup(parser.parse(jndiName));
     } catch (NamingException ne) {
       throw new IllegalStateException("JNDI tree does not contain a DataSource under the name [" + jndiName + "]");
     }
