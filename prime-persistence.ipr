@@ -90,6 +90,9 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+  <component name="GradleSettings">
+    <option name="gradleHome" value="$GRADLE_HOME$" />
+  </component>
   <component name="IdProvider" IDEtalkID="D3D47E7EA77D6707C2DA6C7FDBCD7A64" />
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
