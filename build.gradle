@@ -61,7 +61,7 @@ dependencies {
   testCompile(
     "org.testng:testng:6.3.1",
     "org.easymock:easymock:3.1",
-    "org.primeframework:prime-mock:1.0-SNAPSHOT"
+    "org.primeframework:prime-mock:0.1"
   )
 }
 
