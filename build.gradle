@@ -1,14 +1,14 @@
 // Project info
 group = "org.primeframework"
-version = "0.1"
+version = "0.2"
 description = "The Prime Persistence Framework"
 
 // Plugins
 apply plugin: "java"
-apply plugin: "ide"
+apply plugin: "idea"
 apply plugin: "testng"
 apply plugin: "database"
-apply plugin: "integration"
+apply plugin: "init"
 apply plugin: "release"
 
 // Build script config
@@ -24,13 +24,10 @@ buildscript {
     }
   }
   dependencies {
-    classpath(
+    classpath "org.primeframework.gradle:gradle-init-plugin:0.3",
       "org.primeframework.gradle:gradle-database-plugin:0.1",
-      "org.primeframework.gradle:gradle-integration-plugin:0.1",
-      "org.primeframework.gradle:gradle-ide-plugin:0.1",
       "org.primeframework.gradle:gradle-testng-plugin:0.1",
-      "org.primeframework.gradle:gradle-release-plugin:0.2"
-    )
+      "org.primeframework.gradle:gradle-release-plugin:0.6"
   }
 }
 
