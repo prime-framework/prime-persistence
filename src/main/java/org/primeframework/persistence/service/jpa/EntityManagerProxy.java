@@ -62,7 +62,7 @@ public class EntityManagerProxy implements EntityManager {
   @Override
   public void remove(Object entity) {
     grabProxy();
-    proxy.clear();
+    proxy.remove(entity);
   }
 
   @Override

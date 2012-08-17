@@ -32,6 +32,7 @@ import static org.testng.Assert.assertEquals;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class EntityManagerProxyTest {
   @Test
   public void proxy() {
@@ -83,8 +84,8 @@ public class EntityManagerProxyTest {
     replay(service);
 
     EntityManagerProxy proxy = new EntityManagerProxy(service);
-    em.clear();
-    em.close();
+    proxy.clear();
+    proxy.close();
     assertEquals(proxy.contains(null), false);
     assertEquals(proxy.createNamedQuery("foo"), null);
     assertEquals(proxy.createNamedQuery("foo", null), null);
@@ -94,12 +95,12 @@ public class EntityManagerProxyTest {
     assertEquals(proxy.createQuery("foo"), null);
     assertEquals(proxy.createQuery((CriteriaQuery) null), null);
     assertEquals(proxy.createQuery("foo", null), null);
-    em.detach(null);
+    proxy.detach(null);
     assertEquals(proxy.find(null, null), null);
     assertEquals(proxy.find(null, null, (Map) null), null);
     assertEquals(proxy.find(null, null, (LockModeType) null), null);
     assertEquals(proxy.find(null, null, null, null), null);
-    em.flush();
+    proxy.flush();
     assertEquals(proxy.getCriteriaBuilder(), null);
     assertEquals(proxy.getDelegate(), null);
     assertEquals(proxy.getEntityManagerFactory(), null);
@@ -110,18 +111,20 @@ public class EntityManagerProxyTest {
     assertEquals(proxy.getReference(null, null), null);
     assertEquals(proxy.getTransaction(), null);
     assertEquals(proxy.isOpen(), false);
-    em.joinTransaction();
-    em.lock(null, null);
-    em.lock(null, null, null);
+    proxy.joinTransaction();
+    proxy.lock(null, null);
+    proxy.lock(null, null, null);
     assertEquals(proxy.merge(null), null);
-    em.persist(null);
-    em.refresh(null);
-    em.refresh(null, (Map) null);
-    em.refresh(null, (LockModeType) null);
-    em.refresh(null, null, null);
-    em.remove(null);
-    em.setFlushMode(null);
-    em.setProperty("foo", null);
+    proxy.persist(null);
+    proxy.refresh(null);
+    proxy.refresh(null, (Map) null);
+    proxy.refresh(null, (LockModeType) null);
+    proxy.refresh(null, null, null);
+    proxy.remove(null);
+    proxy.setFlushMode(null);
+    proxy.setProperty("foo", null);
     assertEquals(proxy.unwrap(null), null);
+
+    verify(em, service);
   }
 }

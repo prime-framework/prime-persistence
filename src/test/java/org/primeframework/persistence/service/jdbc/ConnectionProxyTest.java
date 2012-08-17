@@ -28,6 +28,7 @@ import static org.testng.Assert.*;
  *
  * @author Brian Pontarelli
  */
+@Test(groups = "unit")
 public class ConnectionProxyTest {
   @Test
   public void proxy() throws Exception {
@@ -125,19 +126,19 @@ public class ConnectionProxyTest {
     assertEquals(proxy.prepareStatement("foo", 0, 0, 0), null);
     assertEquals(proxy.prepareStatement("foo", columnIndexes), null);
     assertEquals(proxy.prepareStatement("foo", columnNames), null);
-    connection.releaseSavepoint(null);
-    connection.rollback();
-    connection.rollback(null);
-    connection.setAutoCommit(false);
-    connection.setCatalog(null);
-    connection.setClientInfo("foo", "foo");
-    connection.setClientInfo(null);
-    connection.setHoldability(0);
-    connection.setReadOnly(false);
+    proxy.releaseSavepoint(null);
+    proxy.rollback();
+    proxy.rollback(null);
+    proxy.setAutoCommit(false);
+    proxy.setCatalog(null);
+    proxy.setClientInfo("foo", "foo");
+    proxy.setClientInfo(null);
+    proxy.setHoldability(0);
+    proxy.setReadOnly(false);
     assertEquals(proxy.setSavepoint(), null);
     assertEquals(proxy.setSavepoint("foo"), null);
-    connection.setTransactionIsolation(0);
-    connection.setTypeMap(null);
+    proxy.setTransactionIsolation(0);
+    proxy.setTypeMap(null);
     assertEquals(proxy.unwrap(null), null);
 
     verify(connection, service);
