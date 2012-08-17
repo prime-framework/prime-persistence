@@ -21,7 +21,9 @@ import javax.sql.DataSource;
 import org.primeframework.mock.jndi.MockJNDI;
 import org.primeframework.persistence.guice.PersistenceModule;
 import org.primeframework.persistence.service.DatabaseType;
+import org.primeframework.persistence.service.guice.ServiceModule;
 import org.primeframework.persistence.test.JDBCTestHelper;
+import org.primeframework.persistence.txn.guice.TransactionModule;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -49,6 +51,6 @@ public abstract class BasePersistenceTest {
       protected void bindDataSource() {
         bind(DataSource.class).toInstance(JDBCTestHelper.dataSource);
       }
-    });
+    }, new ServiceModule(), new TransactionModule());
   }
 }

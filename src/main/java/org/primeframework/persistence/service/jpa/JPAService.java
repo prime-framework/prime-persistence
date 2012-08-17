@@ -18,15 +18,12 @@ package org.primeframework.persistence.service.jpa;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import com.google.inject.ImplementedBy;
-
 /**
  * This interface is used to configure, start and handle JPA interactions. The main function of this class is to create
  * the EntityManagerFactory and provide access to it.
  *
  * @author Brian Pontarelli
  */
-@ImplementedBy(DriverAwareJPAService.class)
 public interface JPAService {
   /**
    * @return The EntityManagerFactory if JPA is enabled and correctly configured. This will return null if JPA is

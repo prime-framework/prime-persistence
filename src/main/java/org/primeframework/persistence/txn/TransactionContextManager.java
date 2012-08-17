@@ -15,14 +15,11 @@
  */
 package org.primeframework.persistence.txn;
 
-import com.google.inject.ImplementedBy;
-
 /**
  * This interface defines the manager that manages the current transaction context.
  *
  * @author Brian Pontarelli
  */
-@ImplementedBy(DefaultTransactionContextManager.class)
 public interface TransactionContextManager {
   /**
    * Starts a new transaction.

@@ -24,15 +24,12 @@ import org.primeframework.persistence.domain.Identifiable;
 import org.primeframework.persistence.domain.SoftDeletable;
 import org.primeframework.persistence.service.Transaction;
 
-import com.google.inject.ImplementedBy;
-
 /**
  * This interface defines a basic set of persistence methods for objects. This interface is almost entirely JPA
  * specific, but it is nice to have an interface for testing.
  *
  * @author Brian Pontarelli
  */
-@ImplementedBy(JPAPersistenceService.class)
 public interface PersistenceService {
   /**
    * This is mostly a hack to get around Hibernate's sometimes aggravating caching. This clears any persistence cache

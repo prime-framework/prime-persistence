@@ -18,14 +18,11 @@ package org.primeframework.persistence.service.jdbc;
 import javax.sql.DataSource;
 import java.sql.Connection;
 
-import com.google.inject.ImplementedBy;
-
 /**
  * This interface defines the operations for JDBC.
  *
  * @author Brian Pontarelli
  */
-@ImplementedBy(DefaultJDBCService.class)
 public interface JDBCService {
   /**
    * @return The data source or null if JDBC is disabled.

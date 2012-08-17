@@ -36,6 +36,6 @@ public class ConnectionProvider implements Provider<Connection> {
 
   @Override
   public Connection get() {
-    return service.setupConnection();
+    return new ConnectionProxy(service);
   }
 }

@@ -36,6 +36,6 @@ public class EntityManagerProvider implements Provider<EntityManager> {
 
   @Override
   public EntityManager get() {
-    return service.setupEntityManager();
+    return new EntityManagerProxy(service);
   }
 }
