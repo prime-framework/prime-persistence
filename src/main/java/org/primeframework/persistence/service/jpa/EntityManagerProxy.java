@@ -281,6 +281,13 @@ public class EntityManagerProxy implements EntityManager {
     return proxy.getMetamodel();
   }
 
+  /**
+   * @return The proxied EntityManager.
+   */
+  public EntityManager getEntityManager() {
+    return proxy;
+  }
+
   private void grabProxy() {
     if (proxy == null) {
       proxy = service.setupEntityManager();
