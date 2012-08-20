@@ -31,14 +31,17 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Delete extends BaseOperation<Delete> {
   public static final String FROM_UNDEFINED_MSG = "from undefined";
-  public static final String EQUALS_AND_IN_UNDEFINED_MSG = "where clause defined without '=' or 'in'";
-  public static final String EQUALS_AND_IN_DEFINED_MSG = "where clause defined with both '=' and 'in'";
+  public static final String EQUALS_AND_IN_AND_LESS_THAN_UNDEFINED_MSG = "where clause defined without '=' or 'in'";
 
   private final Connection c;
   private String someTable;
   private String someColumn;
-  private String someValue;
+  private Object someValue;
   private List<Object> valueList = new ArrayList<Object>();
+
+  boolean equalsDefined = false;
+  boolean lessThanDefined = false;
+  boolean inDefined = false;
 
   public Delete(Connection c) {
     super(true);
@@ -55,12 +58,25 @@ public class Delete extends BaseOperation<Delete> {
     return this;
   }
 
-  public Delete isEqualTo(String someValue) {
+  public Delete isEqualTo(Object someValue) {
     this.someValue = someValue;
+    this.equalsDefined = true;
+    this.inDefined = false;
+    this.lessThanDefined = false;
+    return this;
+  }
+
+  public Delete isLessThan(Object someValue) {
+    this.someValue = someValue;
+    this.equalsDefined = false;
+    this.lessThanDefined = true;
     return this;
   }
 
   public Delete in(Object... valueList) {
+    this.inDefined = true;
+    this.lessThanDefined = false;
+    this.equalsDefined = false;
     this.valueList.addAll(Arrays.asList(valueList));
     return this;
   }
@@ -75,21 +91,15 @@ public class Delete extends BaseOperation<Delete> {
 
     boolean fromUndefined = StringUtils.isBlank(someTable);
     boolean whereDefined = !StringUtils.isBlank(someColumn);
-    boolean equalsDefined = !StringUtils.isBlank(someValue);
-    boolean inDefined = !valueList.isEmpty();
-    boolean equalsAndInUndefined = !equalsDefined && valueList.isEmpty();
-    boolean equalsAndInDefined = equalsDefined && inDefined;
+    boolean equalsAndInAndLessThanUndefined = !equalsDefined && !inDefined && !lessThanDefined;
 
     if (fromUndefined) {
       throw new DeleteException(FROM_UNDEFINED_MSG);
     }
 
     if (whereDefined) {
-      if (equalsAndInUndefined) {
-        throw new DeleteException(EQUALS_AND_IN_UNDEFINED_MSG);
-      }
-      if (equalsAndInDefined) {
-        throw new DeleteException(EQUALS_AND_IN_DEFINED_MSG);
+      if (equalsAndInAndLessThanUndefined) {
+        throw new DeleteException(EQUALS_AND_IN_AND_LESS_THAN_UNDEFINED_MSG);
       }
     }
 
@@ -102,7 +112,7 @@ public class Delete extends BaseOperation<Delete> {
       if (equalsDefined) {
         sql.append("= ").append("?");
         add(someValue);
-      } else {
+      } else if (inDefined) {
         sql.append("in (");
         for (int i = 0; i < valueList.size(); i++) {
           if (i > 0) {
@@ -112,6 +122,9 @@ public class Delete extends BaseOperation<Delete> {
           add(valueList.get(i));
         }
         sql.append(")");
+      } else {
+        sql.append("< ").append("?");
+        add(someValue);
       }
 
     }

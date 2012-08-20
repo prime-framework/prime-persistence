@@ -34,7 +34,7 @@ public class DeleteTest {
   }
 
   @Test
-  public void noEqualsOrIn() throws SQLException {
+  public void noEqualsOrInOrLessThan() throws SQLException {
     Connection c = createStrictMock(Connection.class);
     Delete delete = new Delete(c);
     delete.from("foo").where("bar");
@@ -42,20 +42,7 @@ public class DeleteTest {
     try {
       delete.execute();
     } catch (DeleteException e) {
-      Assert.assertEquals(e.getMessage(), Delete.EQUALS_AND_IN_UNDEFINED_MSG);
-    }
-  }
-
-  @Test
-  public void equalsAndIn() throws SQLException {
-    Connection c = createStrictMock(Connection.class);
-    Delete delete = new Delete(c);
-    delete.from("foo").where("bar").isEqualTo("baz").in("fred", "waldo");
-
-    try {
-      delete.execute();
-    } catch (DeleteException e) {
-      Assert.assertEquals(e.getMessage(), Delete.EQUALS_AND_IN_DEFINED_MSG);
+      Assert.assertEquals(e.getMessage(), Delete.EQUALS_AND_IN_AND_LESS_THAN_UNDEFINED_MSG);
     }
   }
 
@@ -92,6 +79,26 @@ public class DeleteTest {
     replay(c);
 
     new Delete(c).from("foo").where("bar").isEqualTo(param1).execute();
+
+    verify(ps, c);
+  }
+
+  @Test
+  public void withLessThan() throws SQLException {
+
+    String param1 = "baz";
+
+    PreparedStatement ps = createStrictMock(PreparedStatement.class);
+    ps.setObject(1, param1);
+    expect(ps.executeUpdate()).andReturn(1);
+    ps.close();
+    replay(ps);
+
+    Connection c = createStrictMock(Connection.class);
+    expect(c.prepareStatement("delete from foo where bar < ?")).andReturn(ps);
+    replay(c);
+
+    new Delete(c).from("foo").where("bar").isLessThan(param1).execute();
 
     verify(ps, c);
   }
