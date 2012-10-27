@@ -58,9 +58,9 @@ dependencies {
     "org.jadira.usertype:usertype.jodatime:2.0.1"
   )
   testCompile(
-    "org.testng:testng:6.3.1",
     "org.easymock:easymock:3.1",
-    "org.primeframework:prime-mock:0.1"
+    "org.primeframework:prime-mock:0.1",
+    "org.testng:testng:6.8"
   )
 }
 
