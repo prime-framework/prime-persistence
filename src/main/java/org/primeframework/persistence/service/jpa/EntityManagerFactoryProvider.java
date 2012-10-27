@@ -23,10 +23,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.primeframework.persistence.service.DatabaseType;
 import org.primeframework.persistence.service.DatabaseType.Database;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -38,7 +39,7 @@ import com.google.inject.name.Named;
  * @author Brian Pontarelli
  */
 public class EntityManagerFactoryProvider implements Provider<EntityManagerFactory> {
-  private final static Logger logger = Logger.getLogger(EntityManagerFactoryProvider.class.getName());
+  private final static Logger logger = LoggerFactory.getLogger(EntityManagerFactoryProvider.class);
   private final DataSource dataSource;
   private final String persistenceUnit;
 
@@ -65,11 +66,11 @@ public class EntityManagerFactoryProvider implements Provider<EntityManagerFacto
     c.close();
 
     if (name.contains("mysql")) {
-      logger.fine("Connecting to a MySQL database");
+      logger.debug("Connecting to a MySQL database");
       DatabaseType.database = Database.MYSQL;
       return "org.hibernate.dialect.MySQL5InnoDBDialect";
     } else {
-      logger.fine("Connecting to a PostgreSQL database");
+      logger.debug("Connecting to a PostgreSQL database");
       DatabaseType.database = Database.POSTGRESQL;
       return "org.hibernate.dialect.PostgreSQLDialect";
     }

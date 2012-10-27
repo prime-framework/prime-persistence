@@ -25,11 +25,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Logger;
 
 import org.primeframework.persistence.service.DatabaseType;
 import org.primeframework.persistence.service.DatabaseType.Database;
 import org.primeframework.persistence.service.jdbc.ConnectionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.rowset.CachedRowSetImpl;
 
@@ -39,7 +40,7 @@ import com.sun.rowset.CachedRowSetImpl;
  * @author Brian Pontarelli
  */
 public class JDBCTestHelper {
-  public static final Logger logger = Logger.getLogger(JDBCTestHelper.class.getName());
+  private final static Logger logger = LoggerFactory.getLogger(JDBCTestHelper.class);
   public static DataSource dataSource;
 
   /**

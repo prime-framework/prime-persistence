@@ -18,8 +18,9 @@ package org.primeframework.persistence.txn;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is the default implementation of the transactional context.
@@ -27,7 +28,7 @@ import java.util.logging.Logger;
  * @author Brian Pontarelli
  */
 public class DefaultTransactionContext implements TransactionContext {
-  private final static Logger logger = Logger.getLogger(DefaultTransactionContext.class.getName());
+  private final static Logger logger = LoggerFactory.getLogger(DefaultTransactionContext.class);
   private final List<TransactionalResource> resources = new ArrayList<TransactionalResource>();
   private boolean started;
   private boolean committed;
@@ -55,8 +56,7 @@ public class DefaultTransactionContext implements TransactionContext {
           try {
             resource.rollback();
           } catch (Exception e2) {
-            logger.log(Level.SEVERE, "Unable to rollback a transaction after one of the transactions being " +
-              "managed was unable to be started.", e2);
+            logger.error("Unable to rollback a transaction after one of the transactions being managed was unable to be started.", e2);
           }
         }
 
@@ -107,19 +107,18 @@ public class DefaultTransactionContext implements TransactionContext {
         if (index != 0) {
           // This is seriously bad mojo right here. We don't have two-phase commits, there are multiple
           // resources and the first couple were successful. We'll have to continue committing
-          logger.log(Level.SEVERE, "A resource failed during commit and there aren't two phase commits available. " +
-            "Since this resource was not the first resource, that means another resource completed successfully " +
-            "during the commit and can no longer be rolled back. This is a very complex edge case and Prime " +
-            "currently doesn't support this case. Therefore, we completed the commit and are simply logging the " +
-            "failure.", e);
+          logger.error("A resource failed during commit and there aren't two phase commits available. Since this resource " +
+            "was not the first resource, that means another resource completed successfully during the commit and can no " +
+            "longer be rolled back. This is a very complex edge case and Prime currently doesn't support this case. " +
+            "Therefore, we completed the commit and are simply logging the failure.", e);
         } else {
           try {
             rollback(); // Rollback the rest of the resources
           } catch (TransactionException te) {
             // We can ignore this I guess because we should throw the original exception
-            logger.log(Level.SEVERE, "During the commit of the transaction, the first resource failed. During the " +
-              "rollback of the remaining resources an error was encountered that was unexpected and should not " +
-              "have occurred. The original exception is being thrown and this is the unexpected exception.", e);
+            logger.error("During the commit of the transaction, the first resource failed. During the rollback of the " +
+              "remaining resources an error was encountered that was unexpected and should not have occurred. The original " +
+              "exception is being thrown and this is the unexpected exception.", e);
           }
 
           throw e;
@@ -156,8 +155,8 @@ public class DefaultTransactionContext implements TransactionContext {
         resource.rollback();
       } catch (Exception e) {
         failed = true;
-        logger.log(Level.SEVERE, "A resource failed to be rolled back during a rollback of the current transaction. " +
-          "This rollback occurred because the " +
+        logger.error("A resource failed to be rolled back during a rollback of the current transaction. This rollback " +
+          "occurred because the " +
           (rollbackOnly ? "transaction was set to rollback only" : "the transaction was rollback due to a failure"),
           e);
       }

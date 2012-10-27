@@ -17,9 +17,10 @@ package org.primeframework.persistence.test;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.util.logging.Logger;
 
 import org.postgresql.ds.PGSimpleDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a toolkit that provides helper methods for working with a PostgreSQL relational databases.
@@ -28,7 +29,7 @@ import org.postgresql.ds.PGSimpleDataSource;
  * @author Brian Pontarelli
  */
 public class PostgreSQLTools {
-  private static final Logger logger = Logger.getLogger(PostgreSQLTools.class.getName());
+  private final static Logger logger = LoggerFactory.getLogger(PostgreSQLTools.class);
 
   /**
    * Sets up the connection pool to PostgreSQL and puts that into the JNDI tree.

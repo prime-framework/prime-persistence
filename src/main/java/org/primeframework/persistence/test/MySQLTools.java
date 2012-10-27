@@ -18,7 +18,9 @@ package org.primeframework.persistence.test;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
@@ -30,7 +32,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  * @author Brian Pontarelli
  */
 public class MySQLTools {
-  private static final Logger logger = Logger.getLogger(MySQLTools.class.getName());
+  private final static Logger logger = LoggerFactory.getLogger(MySQLTools.class);
 
   /**
    * Sets up the connection pool to MySQL and puts that into the JNDI tree.
