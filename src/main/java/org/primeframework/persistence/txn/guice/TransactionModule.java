@@ -17,8 +17,11 @@ package org.primeframework.persistence.txn.guice;
 
 import org.primeframework.persistence.txn.DefaultTransactionContextManager;
 import org.primeframework.persistence.txn.TransactionContextManager;
+import org.primeframework.persistence.txn.TransactionMethodInterceptor;
+import org.primeframework.persistence.txn.annotation.Transactional;
 
 import com.google.inject.AbstractModule;
+import static com.google.inject.matcher.Matchers.*;
 
 /**
  * Binds transaction classes.
@@ -28,10 +31,10 @@ import com.google.inject.AbstractModule;
 public class TransactionModule extends AbstractModule {
   @Override
   protected void configure() {
-    bindTransactionContextManager();
-  }
-
-  protected void bindTransactionContextManager() {
     bind(TransactionContextManager.class).to(DefaultTransactionContextManager.class);
+
+    TransactionMethodInterceptor interceptor = new TransactionMethodInterceptor();
+    requestInjection(interceptor);
+    bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
   }
 }

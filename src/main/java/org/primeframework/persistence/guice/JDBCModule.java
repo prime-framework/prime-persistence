@@ -13,27 +13,28 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.primeframework.persistence.service.guice;
+package org.primeframework.persistence.guice;
 
-import org.primeframework.persistence.service.jdbc.DefaultJDBCService;
-import org.primeframework.persistence.service.jdbc.JDBCService;
-import org.primeframework.persistence.service.jpa.DriverAwareJPAService;
-import org.primeframework.persistence.service.jpa.JPAPersistenceService;
-import org.primeframework.persistence.service.jpa.JPAService;
-import org.primeframework.persistence.service.jpa.PersistenceService;
+import java.sql.Connection;
+
+import org.primeframework.persistence.service.jdbc.ConnectionProvider;
 
 import com.google.inject.AbstractModule;
 
 /**
- * Binds persistence services.
+ * Binds the JDBC classes and allows sub-classes to provide the DataSource.
  *
  * @author Brian Pontarelli
  */
-public class ServiceModule extends AbstractModule {
+public abstract class JDBCModule extends AbstractModule {
   @Override
   protected void configure() {
-    bind(JDBCService.class).to(DefaultJDBCService.class);
-    bind(JPAService.class).to(DriverAwareJPAService.class);
-    bind(PersistenceService.class).to(JPAPersistenceService.class);
+    bind(Connection.class).toProvider(ConnectionProvider.class);
+    bindDataSource();
   }
+
+  /**
+   * Must be implemented to setup the DataSource.
+   */
+  protected abstract void bindDataSource();
 }

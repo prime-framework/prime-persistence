@@ -15,21 +15,10 @@
  */
 package org.primeframework.persistence.guice;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.sql.Connection;
-
-import org.primeframework.persistence.service.jdbc.ConnectionProvider;
-import org.primeframework.persistence.service.jpa.EntityManagerFactoryProvider;
-import org.primeframework.persistence.service.jpa.EntityManagerProvider;
-import org.primeframework.persistence.txn.TransactionMethodInterceptor;
-import org.primeframework.persistence.txn.annotation.Transactional;
+import org.primeframework.persistence.service.guice.ServiceModule;
+import org.primeframework.persistence.txn.guice.TransactionModule;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Singleton;
-import static com.google.inject.matcher.Matchers.*;
-import com.google.inject.name.Names;
 
 /**
  * This module should be used for JPA or JDBC support. It sets up the injection for all of the JPA classes as well as
@@ -37,13 +26,20 @@ import com.google.inject.name.Names;
  *
  * @author Brian Pontarelli
  */
-public abstract class PersistenceModule extends AbstractModule {
-  private final boolean jpaEnabled;
-  private final String jpaUnit;
+public class PersistenceModule extends AbstractModule {
+  private final JDBCModule jdbcModule;
+  private final JPAModule jpaModule;
 
-  public PersistenceModule(boolean jpaEnabled, String jpaUnit) {
-    this.jpaEnabled = jpaEnabled;
-    this.jpaUnit = jpaUnit;
+  /**
+   * Creates a module for the Prime persistence system. If you pass in a JPAModule, JPA will be enabled. If you pass in
+   * null, it will be disabled.
+   *
+   * @param jdbcModule The JDBC module.
+   * @param jpaModule (Optional) The JPA module.
+   */
+  public PersistenceModule(JDBCModule jdbcModule, JPAModule jpaModule) {
+    this.jdbcModule = jdbcModule;
+    this.jpaModule = jpaModule;
   }
 
   /**
@@ -51,36 +47,12 @@ public abstract class PersistenceModule extends AbstractModule {
    */
   @Override
   protected void configure() {
-    TransactionMethodInterceptor interceptor = new TransactionMethodInterceptor();
-    requestInjection(interceptor);
-    bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
+    install(new ServiceModule());
+    install(new TransactionModule());
+    install(jdbcModule);
 
-    configureJDBC();
-
-    if (jpaEnabled) {
-      configureJPA();
+    if (jpaModule != null) {
+      install(jpaModule);
     }
-  }
-
-  /**
-   * Sets up injections for the {@link Connection} and {@link DataSource}.
-   */
-  protected void configureJDBC() {
-    bind(Connection.class).toProvider(ConnectionProvider.class);
-    bindDataSource();
-  }
-
-  /**
-   * Must be implemented to setup the DataSource.
-   */
-  protected abstract void bindDataSource();
-
-  /**
-   * Sets up injections for {@link EntityManager} and {@link EntityManagerFactory}.
-   */
-  protected void configureJPA() {
-    bind(EntityManagerFactory.class).toProvider(EntityManagerFactoryProvider.class).in(Singleton.class);
-    bind(EntityManager.class).toProvider(EntityManagerProvider.class);
-    bindConstant().annotatedWith(Names.named("jpa.unit")).to(jpaUnit);
   }
 }
