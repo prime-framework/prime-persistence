@@ -19,6 +19,7 @@ import org.primeframework.persistence.service.guice.ServiceModule;
 import org.primeframework.persistence.txn.guice.TransactionModule;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Module;
 
 /**
  * This module should be used for JPA or JDBC support. It sets up the injection for all of the JPA classes as well as
@@ -28,7 +29,7 @@ import com.google.inject.AbstractModule;
  */
 public class PersistenceModule extends AbstractModule {
   private final JDBCModule jdbcModule;
-  private final JPAModule jpaModule;
+  private final Module jpaModule;
 
   /**
    * Creates a module for the Prime persistence system. If you pass in a JPAModule, JPA will be enabled. If you pass in
@@ -37,7 +38,7 @@ public class PersistenceModule extends AbstractModule {
    * @param jdbcModule The JDBC module.
    * @param jpaModule (Optional) The JPA module.
    */
-  public PersistenceModule(JDBCModule jdbcModule, JPAModule jpaModule) {
+  public PersistenceModule(JDBCModule jdbcModule, Module jpaModule) {
     this.jdbcModule = jdbcModule;
     this.jpaModule = jpaModule;
   }
