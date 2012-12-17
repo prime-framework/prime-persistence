@@ -12,15 +12,24 @@ import static org.testng.Assert.*;
 public class ExceptionToolsTest {
 
   @Test
-  public void findCause() {
+  public void getOriginalCause() {
 
     Throwable throwable = new Exception(new MockCauseOne());
-    Throwable t = ExceptionTools.findCause(throwable);
+    Throwable t = ExceptionTools.getOriginalCause(throwable);
     assertTrue(t instanceof MockCauseOne);
 
     throwable = new Exception(new MockCauseOne(new MockCauseTwo(new MockCauseThree())));
-    t = ExceptionTools.findCause(throwable);
+    t = ExceptionTools.getOriginalCause(throwable);
     assertTrue(t instanceof MockCauseThree);
+  }
+
+  @Test
+  public void findCause() {
+    Throwable throwable = new Exception();
+    assertFalse(ExceptionTools.containsCause(throwable, MockCauseOne.class));
+
+    throwable = new Exception(new MockCauseOne(new MockCauseTwo(new MockCauseThree())));
+    assertTrue(ExceptionTools.containsCause(throwable, MockCauseThree.class));
   }
 
   public static class MockCauseOne extends Throwable {
