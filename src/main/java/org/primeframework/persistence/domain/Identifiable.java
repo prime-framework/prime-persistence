@@ -22,9 +22,9 @@ import java.io.Serializable;
  *
  * @author Brian Pontarelli
  */
-public interface Identifiable {
+public interface Identifiable<T extends Serializable> {
   /**
    * @return The primary key or null if this entity has not been persisted.
    */
-  Serializable getId();
+  T getId();
 }
